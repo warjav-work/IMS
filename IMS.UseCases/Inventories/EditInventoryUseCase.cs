@@ -14,7 +14,7 @@ namespace IMS.UseCases.Inventories
         }
         public async Task ExecuteAsync(Inventory inventory)
         {
-            if ( !await _inventoryRepository.ExistsAsync(inventory))
+            if ( await _inventoryRepository.ExistsAsync(inventory))
             {
                 await _inventoryRepository.UpdateInventoryAsync(inventory);
             }
