@@ -23,13 +23,13 @@ namespace IMS.Plugins.InMemory
             inventory.InventoryId = maxId + 1;
 
             _inventories.Add(inventory);
-            
+
             return Task.CompletedTask;
         }
 
         public async Task<bool> ExistsAsync(Inventory inventory)
         {
-            return await Task.FromResult(_inventories.Any(x=> x.InventoryName.Equals(inventory.InventoryName, StringComparison.OrdinalIgnoreCase)));
+            return await Task.FromResult(_inventories.Any(x => x.InventoryName.Equals(inventory.InventoryName, StringComparison.OrdinalIgnoreCase)));
         }
 
         public async Task<IEnumerable<Inventory>> GetInventoriesByNameAsync(string name)
@@ -39,6 +39,27 @@ namespace IMS.Plugins.InMemory
                 return await Task.FromResult(_inventories);
             }
             return _inventories.Where(x => x.InventoryName.Contains(name, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public Task UpdateInventoryAsync(Inventory inventory)
+        {
+            if (_inventories.Any(x => x.InventoryId != inventory.InventoryId &&
+                x.InventoryName.Equals(inventory.InventoryName, StringComparison.OrdinalIgnoreCase)))
+            {
+                return Task.CompletedTask;
+            }
+
+            var inv = _inventories.FirstOrDefault(x => x.InventoryId == inventory.InventoryId);
+
+            if (inv != null)
+            {
+                inv.InventoryName = inventory.InventoryName;
+                inv.Quantity = inventory.Quantity;
+                inv.Price = inventory.Price;
+            }
+
+            return Task.CompletedTask;
+
         }
     }
 }
