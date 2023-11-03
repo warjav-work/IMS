@@ -1,7 +1,8 @@
 ﻿using IMS.CoreBusiness;
+using IMS.UseCases.Inventories.Interfaces;
 using IMS.UseCases.PluginInterfaces;
 
-namespace IMS.UseCases.Inventories.Interfaces
+namespace IMS.UseCases.Inventories
 {
     public class AddInventoryUseCase : IAddInventoryUseCase
     {
@@ -13,7 +14,7 @@ namespace IMS.UseCases.Inventories.Interfaces
         }
         public async Task ExecuteAsync(Inventory inventory)
         {
-            if (!await _inventoryRepository.ExistsAsync(inventory))
+            if ( !await _inventoryRepository.ExistsAsync(inventory))
             {
                 await _inventoryRepository.AddInventoryAsync(inventory);
             }

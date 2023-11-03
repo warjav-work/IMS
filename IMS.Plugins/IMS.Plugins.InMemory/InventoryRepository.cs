@@ -29,7 +29,7 @@ namespace IMS.Plugins.InMemory
 
         public async Task<bool> ExistsAsync(Inventory inventory)
         {
-            return await Task.FromResult(_inventories.Any(x=> x.InventoryName.Equals(x.InventoryName, StringComparison.OrdinalIgnoreCase)));
+            return await Task.FromResult(_inventories.Any(x=> x.InventoryName.Equals(inventory.InventoryName, StringComparison.OrdinalIgnoreCase)));
         }
 
         public async Task<IEnumerable<Inventory>> GetInventoriesByNameAsync(string name)
