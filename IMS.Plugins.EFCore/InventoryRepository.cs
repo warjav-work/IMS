@@ -47,7 +47,7 @@ namespace IMS.Plugins.EFCore
 
         public async Task UpdateInventoryAsync(Inventory inventory)
         {
-            var inv = _context.Inventories.FirstOrDefault(x => x.InventoryId == inventory.InventoryId);
+            var inv =  await _context.Inventories.FirstOrDefaultAsync(x => x.InventoryId == inventory.InventoryId);
 
             if (inv != null)
             {
@@ -55,8 +55,9 @@ namespace IMS.Plugins.EFCore
                 inv.Quantity = inventory.Quantity;
                 inv.Price = inventory.Price;
                 _context.Inventories.Update(inv);
+
+                await _context.SaveChangesAsync();
             }
-            await _context.SaveChangesAsync();
         }
     }
 }
