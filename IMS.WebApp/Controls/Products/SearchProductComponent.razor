@@ -1,0 +1,23 @@
+﻿@inject IViewProductsByNameUseCase ViewProductsByNameUseCase
+<div class="input-group">
+    <input type="text"
+           class="form-control"
+           placeholder="Type product name here to search"
+    @bind-value="productNameToSearch" />
+    <button class="btn-success input-group-text" @onclick="@(async() => { await OnSearch(); })">Search</button>
+</div>
+<br />
+
+@code {
+    private string productNameToSearch = string.Empty;
+
+    [Parameter]
+    public EventCallback<List<Product>> OnSearchProduct { get; set; }
+
+    private async Task OnSearch()
+    {
+        var products = (await ViewProductsByNameUseCase.ExecuteAsync(productNameToSearch ?? string.Empty))?.ToList();
+        await OnSearchProduct.InvokeAsync(products);
+    }
+
+}

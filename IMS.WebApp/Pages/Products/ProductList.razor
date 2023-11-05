@@ -1,0 +1,36 @@
+﻿@page "/producs"
+<h3>Product List</h3>
+<br />
+<SearchProductComponent OnSearchProduct="OnSearchProducts"></SearchProductComponent>
+
+@if(Products != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Products)
+            {
+                <ProductItemComponent Product="product"></ProductItemComponent>
+            }
+        </tbody>
+
+    </table>
+}
+
+@code {
+    private List<Product>? Products;
+    private void OnSearchProducts(List<Product> products)
+    {
+        this.Products = products;
+    }
+
+    
+    
+}

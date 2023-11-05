@@ -19,7 +19,7 @@ namespace IMS.Plugins.EFCore
 
         public async Task<List<Product>> GetProductsByNameAsync(string name = "")
         {
-            return await _context.Products.Where(x => x.ProductName.Contains(name) ||
+            return await _context.Products.Where(x => x.ProductName.Contains(name,StringComparison.OrdinalIgnoreCase) ||
             string.IsNullOrWhiteSpace(name)).ToListAsync();
         }
     }
